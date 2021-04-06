@@ -158,8 +158,4 @@ class App:
         self.keyWaiting = False
 
     def run(self, puzzle = None):
-        if puzzle != None:
-            self.puzzle = puzzle + ".txt"
-            self.load("puzzles/"+self.puzzle)
-            self.ui.solveButtonSwitch(SolveButtonOption.READY)
         self.ui.mainloop()

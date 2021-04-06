@@ -3,13 +3,7 @@ from core import App
 
 def main(argv):
     app = App()
-    puzzle = "puzzle"
-    if len(argv) >= 1:
-        for e in argv:
-            puzzle += "_" + str(e)
-    else:
-        puzzle = None
-    app.run(puzzle)
+    app.run()
 
 if __name__ == "__main__":
     main(sys.argv[1:])

@@ -12,7 +12,7 @@ class Sudoku:
     def __init__(self, render):
         self.render = render
         self.reseed_count = 0
-        self.exit_flag = False
+        self.exitFlag = False
         self.given = get_chromosome(given.values)
         self.track_grid = None
         self.population = Population()
@@ -89,7 +89,7 @@ class Sudoku:
 
         # For up to 2000 generations...
         for i in range(MAX_GENERATION):
-            if self.exit_flag:
+            if self.exitFlag:
                 return
 
             # Update the best candidate for each generation
