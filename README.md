@@ -20,7 +20,7 @@ Run the code by executing `python main.py` at the command line.
 ![Screenshot](img/sudoku_screen.png)
 
 *Open button* : Load a Sudoku puzzle from a file  
-*Write button* : Enable you to enter your own Sudoku puzzle to the board  
+*Write button* : Enable to enter your own Sudoku puzzle to the board  
 *Clear button* : Clear the current Sudoku puzzle  
 *Solve/Cancel button* : Start/Stop solving Sudoku puzlle using genetic algorithm
 
