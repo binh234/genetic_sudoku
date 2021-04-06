@@ -10,9 +10,12 @@ class Candidate:
     def __init__(self):
         self.gene = np.zeros((DIGIT_NUMBER, DIGIT_NUMBER), dtype=int)
         self.fitness = 0
+        
+        # The fitness matrix stores fitness scores for each row of
+        # sub-grid and each col of sub-grid in the chromosome
         self.fitness_matrix = np.zeros((2, BLOCK_NUMBER), dtype=int)
         self.fitness_method = PerfectFitness()
-        self.mutate_method = SwapMutation()
+        self.mutate_method = MultiSwapMutation()
         self.local_search_method = SwapMutation()
 
     def update_fitness(self, tracker):
@@ -26,7 +29,6 @@ class Candidate:
         Mutates a candidate with a mutation_rate.
         """
         r = random.random()
-    
         if r < mutation_rate:  # Mutate.
             return self.mutate_method.mutate(self, given)
     

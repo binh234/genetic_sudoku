@@ -66,7 +66,6 @@ class Sudoku:
                         self.given[i][j] = list(self.track_grid[i][j])[0]
                         pencil_mark(i, j)
 
-                        # track_grid[i][j] = None
                         anything_changed = True
 
             if not anything_changed:
@@ -107,11 +106,13 @@ class Sudoku:
             renderTxt += "Best fitness: %d\n" % prev_best_fitness
             renderTxt += "Worst fitness: %d\n" % self.population.candidates[-1].fitness
             renderTxt += "Reseed count: %d\n" % self.reseed_count
-            self.render(renderTxt)
 
             # Check for a solution
             if prev_best_fitness == GOAL:
+                self.render(renderTxt, RenderOption.FOUNDED)
                 return
+            else:
+                self.render(renderTxt)
 
             # Go to next generation if the current population doesn't have solution
             self.population.next_gen(self.given, self.track_grid)

@@ -108,6 +108,7 @@ class Population:
             # Crossover them to generate new child for next generation with a crossover rate
             child1, child2 = self.crossover_method.crossover(parents[0], parents[1], self.crossover_rate)
 
+            # Add child to the next genration population
             new_population.append(child1)
             new_population.append(child2)
         

@@ -1,4 +1,5 @@
 import random
+from .settings import DIGIT_NUMBER
 
 class RandomMutation:
     def __init__(self):
@@ -19,14 +20,16 @@ class SwapMutation:
             - candidate (Candidate): The candidate to mutate
             - given (array): Helper array that determines all fixed values in the statring Sudoku puzzle
         """
-        grid_size = len(given)
-        random_sub_grid = random.randint(0, grid_size - 1)
+        random_sub_grid = random.randint(0, DIGIT_NUMBER - 1)
         possible_swaps = []
         success = False
 
-        for grid_element_index in range(grid_size):
+        # Get all unknown cells index
+        for grid_element_index in range(DIGIT_NUMBER):
             if given[random_sub_grid][grid_element_index] == 0:
                 possible_swaps.append(grid_element_index)
+
+        # Select two indexes and swap their values
         if len(possible_swaps) > 1:
             success = True
             random.shuffle(possible_swaps)
@@ -48,17 +51,19 @@ class MultiSwapMutation:
             - candidate (Candidate): The candidate to mutate
             - given (array): Helper array that determines all fixed values in the statring Sudoku puzzle
         """
-        grid_size = len(given)
+        # Randomly select 1 to 5 swap actions to perform
         num_swap = random.choices(list(range(1, 6)), weights=self.weights, k=1)[0]
         success = False
 
         for _ in range(num_swap):
-            random_sub_grid = random.randint(0, grid_size - 1)
+            random_sub_grid = random.randint(0, DIGIT_NUMBER - 1)
             possible_swaps = []
-            for grid_element_index in range(grid_size):
+            # Get all unknown cells index
+            for grid_element_index in range(DIGIT_NUMBER):
                 if given[random_sub_grid][grid_element_index] == 0:
                     possible_swaps.append(grid_element_index)
 
+            # Select two indexes and swap their values
             if len(possible_swaps) > 1:
                 success = True
                 random.shuffle(possible_swaps)
@@ -78,24 +83,20 @@ class AllSwapMutation:
             - candidate (Candidate): The candidate to mutate
             - given (array): Helper array that determines all fixed values in the statring Sudoku puzzle
         """
-        grid_size = len(given)
-        success = True
-
-        for sub_grid in range(grid_size):
+        for sub_grid in range(DIGIT_NUMBER):
             if random.random() < 0.16:
                 possible_swaps = []
-                for grid_element_index in range(grid_size):
+                for grid_element_index in range(DIGIT_NUMBER):
                     if given[sub_grid][grid_element_index] == 0:
                         possible_swaps.append(grid_element_index)
                 if len(possible_swaps) > 1:
-                    success = True
                     random.shuffle(possible_swaps)
                     first_index, second_index = random.choices(possible_swaps, k=2)
                     tmp = candidate.gene[sub_grid][first_index]
                     candidate.gene[sub_grid][first_index] = candidate.gene[sub_grid][second_index]
                     candidate.gene[sub_grid][second_index] = tmp
         
-        return success
+        return True
 
 class RandomResetting:
     def mutate(self, candidate, given):
@@ -106,15 +107,14 @@ class RandomResetting:
             - candidate (Candidate): The candidate to mutate
             - given (array): Helper array that determines all fixed values in the statring Sudoku puzzle
         """
-        grid_size = len(given)
-        random_sub_grid = random.randint(0, grid_size - 1)
-        possible_values = list(range(1, grid_size + 1))
-        for grid_element_index in range(grid_size):
+        random_sub_grid = random.randint(0, DIGIT_NUMBER - 1)
+        possible_values = list(range(1, DIGIT_NUMBER + 1))
+        for grid_element_index in range(DIGIT_NUMBER):
             if given[random_sub_grid][grid_element_index] != 0:
                 possible_values.remove(given[random_sub_grid][grid_element_index])
 
         random.shuffle(possible_values)
-        for grid_element_index in range(grid_size):
+        for grid_element_index in range(DIGIT_NUMBER):
             if given[random_sub_grid][grid_element_index] == 0:
                 candidate.gene[random_sub_grid][grid_element_index] = possible_values.pop()
         

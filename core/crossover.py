@@ -80,11 +80,15 @@ class RowColCrossover:
             col_score2 = parent2.fitness_matrix[1]
 
             for i in range(3):
+                # For each row of sub-block, the first child will inherit the row
+                # with the highest fitness score between two parents
                 if row_score1[i] > row_score2[i]:
                     child1.gene[3*i:3*(i+1)] = np.copy(grid1[3*i:3*(i+1)])
                 else:
                     child1.gene[3*i:3*(i+1)] = np.copy(grid2[3*i:3*(i+1)])
                 
+                # For each col of sub-block, the first child will inherit the col
+                # with the highest fitness score between two parents
                 if col_score1[i] > col_score2[i]:
                     for j in range(3):
                         child2.gene[j * 3 + i] = np.copy(grid1[j * 3 + i])
@@ -100,7 +104,7 @@ class RowColCrossover:
 class UniformCrossover:
     def crossover(self, parent1, parent2, crossover_rate):
         """ Create two new child candidates by crossing over parent genes. 
-        Parent genes will swap 2 consecutive blocks to generate child genes
+        Parent genes will swap 2 consecutive sub-blocks to generate child genes
         
         Parameters:
             - parent1 (Candidate): First parent to crossover
@@ -121,6 +125,7 @@ class UniformCrossover:
         grid_size = len(parent1.gene)
         r = random.random()
         if r < crossover_rate:
+            # Select a sub-block and swap them between two parents
             cross_point = random.randint(0, grid_size - 1)
             tmp = grid1[cross_point]
             grid1[cross_point] = grid2[cross_point]
@@ -157,8 +162,10 @@ class TwoPointCrossover:
         grid_size = len(parent1.gene)
         r = random.random()
         if r < crossover_rate:
+            # Select two crossover point
             cross_point1 = random.randint(1, grid_size - 2)
             cross_point2 = random.randint(cross_point1 + 1, grid_size - 1)
+            # Swap all sub-blocks between two crossover points to generate new child
             child1.gene = np.concatenate((grid1[:cross_point1], grid2[cross_point1:cross_point2], grid1[cross_point2:]), axis=0)
             child2.gene = np.concatenate((grid2[:cross_point1], grid1[cross_point1:cross_point2], grid2[cross_point2:]), axis=0)
         else:
@@ -192,6 +199,7 @@ class ChoiceCrossover:
         r = random.random()
         if r < crossover_rate:
             for i in range(grid_size):
+                # Randomly select sub-block from two parents to generate new child
                 blocks = [grid1[i], grid2[i]]
                 child1.gene[i] = np.copy(random.choice(blocks))
                 child2.gene[i] = np.copy(random.choice(blocks))
@@ -227,6 +235,7 @@ class HalfCrossover:
         r = random.random()
         if r < crossover_rate:
             for i in range(grid_size):
+                # Randomly select sub-block from two parents to generate new child
                 if random.random() < 0.5:
                     child1.gene[i] = np.copy(grid1[i])
                     child2.gene[i] = np.copy(grid2[i])
