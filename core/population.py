@@ -102,8 +102,7 @@ class Population:
         new_population = []
         for _ in range(0, self.population_size - num_elite, 2):
             # Select 2 parents
-            # parent1 = select_candidates.pop()
-            # parent2 = select_candidates.pop()
+            # parents = [select_candidates.pop(), select_candidates.pop()]
             parents = self.select_method.select_candidates(self.candidates, 2)
 
             # Crossover them to generate new child for next generation with a crossover rate

@@ -124,13 +124,15 @@ class Sudoku:
 
             # Re-seed the population if 30 generations have passed with the fittest value not improving.
             if stale > MAX_STALE_COUNT:
-                # print("The population has gone stale. Perform local search space...")
+                # print("The population has gone stale. Searching in local space...")
                 # self.population.local_search(3, self.given, self.track_grid)
                 self.reseed_count += 1
-                renderTxt = "The population has gone stale. Re-seeding..."
+                renderTxt = "The population has gone stale. Restarting..."
                 self.render(renderTxt, RenderOption.ONLY_TEXT)
                 
-
+                # Store the top few solutions (candiddates) from each stale population
+                # When enough top solutions accumulate, a new population is created from these best solutions
+                # and used as an initial population when the GA is restarted.
                 if len(cum_elites) < POPULATION_SIZE:
                     num_elite = int(POPULATION_SIZE * 0.1)
                     cum_elites.extend(self.population.candidates[:num_elite])

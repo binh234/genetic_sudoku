@@ -60,4 +60,4 @@ class TopSelection:
         """
         top_index = int(self.selection_rate * len(candidates))
 
-        return random.choices(candidates[:top_index], k=2)
+        return random.choices(candidates[:top_index], k=number)
