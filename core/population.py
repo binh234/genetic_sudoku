@@ -97,13 +97,13 @@ class Population:
             elite.gene = np.copy(self.candidates[i].gene)
             elites.append(elite)
 
-        # select_candidates = self.select_method.select_candidates(self.candidates, self.population_size - num_elite)
+        select_candidates = self.select_method.select_candidates(self.candidates, self.population_size - num_elite)
 
         new_population = []
         for _ in range(0, self.population_size - num_elite, 2):
             # Select 2 parents
-            # parents = [select_candidates.pop(), select_candidates.pop()]
-            parents = self.select_method.select_candidates(self.candidates, 2)
+            parents = [select_candidates.pop(), select_candidates.pop()]
+            # parents = self.select_method.select_candidates(self.candidates, 2)
 
             # Crossover them to generate new child for next generation with a crossover rate
             child1, child2 = self.crossover_method.crossover(parents[0], parents[1], self.crossover_rate)

@@ -12,8 +12,8 @@ class RandomMutation:
 class SwapMutation:
     def mutate(self, candidate, given):
         """  Mutate a candidate gene. Two numerals within a
-        sub-block that are not given in the starting point are selected
-        randomly and their positions are swapped.
+        sub-block that are not given in the starting point are 
+        selected randomly and their positions are swapped.
         
         Parameters:
             - candidate (Candidate): The candidate to mutate
